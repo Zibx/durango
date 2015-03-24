@@ -52,7 +52,7 @@ module.exports = (function () {
                     encodeURIComponent(el.val);
             }).join('&');
 
-            var log = {url: this.url, data: this.data, rawData: query};
+            var log = {url: this.url, data: data, rawData: query};
             curl.post(this.url+'?'+data, {
                 headers: [
                     'Content-type: text/xml; charser=utf-8'
