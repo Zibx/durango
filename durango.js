@@ -27,7 +27,9 @@ module.exports = (function () {
             cfg.username = this.username;
             cfg.password = this.password;
             var owner = cfg.owner.split(' ');
+
             cfg.firstname = owner[0];
+            owner[1] = owner.slice(1).join(' ');
             cfg.lastname = owner[1];
             delete cfg.owner;
             for( i in cfg )
@@ -49,12 +51,18 @@ module.exports = (function () {
                 return encodeURIComponent(el.key) + '=' +
                     encodeURIComponent(el.val);
             }).join('&');
-            console.log(data);
+
+            var log = {url: this.url, data: this.data, rawData: query};
             curl.post(this.url+'?'+data, {
                 headers: [
                     'Content-type: text/xml; charser=utf-8'
                 ]
-            }, callback )
+            }, function (err, data) {
+                if(!data)
+                    callback(err, data, log);
+                else
+                    callback(false, data, log);
+            } );
         }
     };
 
